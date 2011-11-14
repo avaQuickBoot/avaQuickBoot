@@ -16,7 +16,7 @@
 
 ■ソースコード
 　ソースコードは以下のURLで公開しております。GPLの元ご利用ください。
-  https://github.com/ahirunobashi/avaQuickBoot
+  https://github.com/avaQuickBoot/avaQuickBoot
 
 ■開発環境
 　Windows 7 Professional Edition 64bit SP1
