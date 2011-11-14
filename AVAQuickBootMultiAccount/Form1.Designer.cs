@@ -69,7 +69,7 @@
 			// 
 			// WindowMode
 			// 
-			this.WindowMode.Text = "WindowMode";
+			this.WindowMode.Text = "ウインドウモード";
 			this.WindowMode.Width = 100;
 			// 
 			// contextMenuStrip1
@@ -81,27 +81,27 @@
             this.toolStripSeparator1,
             this.ショートカット作成ToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(171, 120);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(221, 98);
 			// 
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
-			this.toolStripMenuItem1.Text = "launch AVA";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(220, 22);
+			this.toolStripMenuItem1.Text = "このアカウントでAVA実行";
 			this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
 			// 
 			// 編集ToolStripMenuItem
 			// 
 			this.編集ToolStripMenuItem.Name = "編集ToolStripMenuItem";
-			this.編集ToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-			this.編集ToolStripMenuItem.Text = "modify account";
+			this.編集ToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+			this.編集ToolStripMenuItem.Text = "アカウント情報変更";
 			this.編集ToolStripMenuItem.Click += new System.EventHandler(this.編集ToolStripMenuItem_Click);
 			// 
 			// 削除ToolStripMenuItem
 			// 
 			this.削除ToolStripMenuItem.Name = "削除ToolStripMenuItem";
-			this.削除ToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-			this.削除ToolStripMenuItem.Text = "remove account";
+			this.削除ToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+			this.削除ToolStripMenuItem.Text = "アカウント削除";
 			this.削除ToolStripMenuItem.Click += new System.EventHandler(this.削除ToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator1
@@ -112,8 +112,8 @@
 			// ショートカット作成ToolStripMenuItem
 			// 
 			this.ショートカット作成ToolStripMenuItem.Name = "ショートカット作成ToolStripMenuItem";
-			this.ショートカット作成ToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-			this.ショートカット作成ToolStripMenuItem.Text = "create shortcut";
+			this.ショートカット作成ToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+			this.ショートカット作成ToolStripMenuItem.Text = "ショートカット作成";
 			this.ショートカット作成ToolStripMenuItem.Click += new System.EventHandler(this.ショートカット作成ToolStripMenuItem_Click);
 			// 
 			// button2
