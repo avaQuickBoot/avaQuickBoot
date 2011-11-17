@@ -79,7 +79,7 @@
 			// 
 			this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox2.Location = new System.Drawing.Point(72, 71);
+			this.textBox2.Location = new System.Drawing.Point(72, 46);
 			this.textBox2.Name = "textBox2";
 			this.textBox2.Size = new System.Drawing.Size(284, 19);
 			this.textBox2.TabIndex = 2;
@@ -88,7 +88,7 @@
 			// 
 			this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox3.Location = new System.Drawing.Point(72, 46);
+			this.textBox3.Location = new System.Drawing.Point(72, 71);
 			this.textBox3.Name = "textBox3";
 			this.textBox3.Size = new System.Drawing.Size(284, 19);
 			this.textBox3.TabIndex = 1;
