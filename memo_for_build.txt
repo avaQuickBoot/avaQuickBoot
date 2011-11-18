@@ -1,0 +1,4 @@
+■ビルド時のメモ
+	・AvaQuickBootMultiAccountリリースビルド時、ILMergeを使用しAvaQuickBootClass.dllとの結合を行うスクリプトをプロジェクトに設定しています。
+		ILMergeをインストールしていない環境では「ビルド後に実行するコマンドライン」欄を空にしてください。
+		ダウンロード先 http://www.microsoft.com/download/en/details.aspx?id=17630

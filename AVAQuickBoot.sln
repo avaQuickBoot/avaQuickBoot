@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C68A31B4-933D-4FC7-93E0-A4A6560CC97B}"
 	ProjectSection(SolutionItems) = preProject
 		gpl-3.0.txt = gpl-3.0.txt
+		memo_for_build.txt = memo_for_build.txt
 		readme.txt = readme.txt
 	EndProjectSection
 EndProject

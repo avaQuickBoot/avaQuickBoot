@@ -4,6 +4,7 @@
 ■動作環境
 　AVAが動作するWindows
 　.net framework 2.0
+　InternetExplorer 32bitでAVAがログインできる状態
 
 ■使い方
 　感じてください。後日作成予定
@@ -21,3 +22,4 @@
 ■開発環境
 　Windows 7 Professional Edition 64bit SP1
 　VisualStudio 2010 Professional SP1
+　InternetExplorer 9
