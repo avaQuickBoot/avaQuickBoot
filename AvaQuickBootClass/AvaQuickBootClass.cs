@@ -213,14 +213,14 @@ namespace AvaQuickBoot
 				return false;
 			}
 
-			HtmlElement flashElement = webBrowser.Document.GetElementById(p.gameStartFlashButton);
-			if (flashElement == null) return false;
-
-			var reg = System.Text.RegularExpressions.Regex.Match(flashElement.OuterHtml, p.gameStartRegex);
-			if (!reg.Success)
+			System.Text.RegularExpressions.Match reg = null;
+			foreach (HtmlElement html in webBrowser.Document.All)
 			{
-				return false;
+				if (html.OuterHtml == null) continue;
+				reg = System.Text.RegularExpressions.Regex.Match(html.OuterHtml, p.gameStartRegex);
+				if (reg.Success)break;
 			}
+			if (reg == null || !reg.Success) return false;
 
 			Debug.WriteLine("num1 = " + reg.Groups["NUM1"]);
 			Debug.WriteLine("num2 = " + reg.Groups["NUM2"]);
@@ -247,7 +247,7 @@ namespace AvaQuickBoot
 		public readonly string windowModeCheckbox = "window_mode";
 		public readonly string gameStartFlashButton = "flash_gamestart_loginSWF";
 		public readonly string gameStartFlashButtonArgument = "gameStart";
-		public readonly int loopLimit = 50;	//味付け 開発環境では、25回程度で起動
+		public readonly int loopLimit = 100;	//味付け 開発環境では、25回程度で起動
 		public readonly string gameStartRegex = @"gameStart\(\s*'(?<NUM1>([0-9])+)'\s*,\s*(?<NUM2>([0-9])+)\s*,\s*'(?<NUM3>([0-9])+)'\s*\)";
 
 		public string accountid = "";
