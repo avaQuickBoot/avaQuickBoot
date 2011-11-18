@@ -57,6 +57,7 @@ namespace AVAQuickBootMultiAccount
 			}
 			else
 			{
+				this.TopMost = false;
 				MessageBox.Show("ログインに失敗しました", "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 

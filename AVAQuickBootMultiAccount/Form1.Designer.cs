@@ -39,6 +39,7 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.ショートカット作成ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.button2 = new System.Windows.Forms.Button();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -58,6 +59,7 @@
 			this.listView1.Name = "listView1";
 			this.listView1.Size = new System.Drawing.Size(537, 303);
 			this.listView1.TabIndex = 0;
+			this.toolTip1.SetToolTip(this.listView1, "行をダブルクリックすることで、そのアカウントのログインが実行されます。\r\n右クリックすると、そのアカウントの編集や削除、ショートカット作成が行えます。");
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
 			this.listView1.DoubleClick += new System.EventHandler(this.launchAva);
@@ -155,6 +157,7 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem ショートカット作成ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+		private System.Windows.Forms.ToolTip toolTip1;
 
 	}
 }

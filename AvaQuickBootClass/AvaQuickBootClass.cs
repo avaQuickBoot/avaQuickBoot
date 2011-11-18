@@ -98,7 +98,7 @@ namespace AvaQuickBoot
 				System.Threading.Thread.Sleep(1000);
 				OnCompleteHandler((object)loginSucceed, e);
 			}
-
+			System.Diagnostics.Debug.WriteLine("loopCount = " + loopCount);
 		 	System.Threading.Interlocked.Increment(ref this.loopCount);
 		}
 
@@ -247,7 +247,7 @@ namespace AvaQuickBoot
 		public readonly string windowModeCheckbox = "window_mode";
 		public readonly string gameStartFlashButton = "flash_gamestart_loginSWF";
 		public readonly string gameStartFlashButtonArgument = "gameStart";
-		public readonly int loopLimit = 100;
+		public readonly int loopLimit = 50;	//味付け 開発環境では、25回程度で起動
 		public readonly string gameStartRegex = @"gameStart\(\s*'(?<NUM1>([0-9])+)'\s*,\s*(?<NUM2>([0-9])+)\s*,\s*'(?<NUM3>([0-9])+)'\s*\)";
 
 		public string accountid = "";
