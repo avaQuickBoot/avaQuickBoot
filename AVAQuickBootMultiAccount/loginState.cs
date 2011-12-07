@@ -15,6 +15,7 @@ namespace AVAQuickBootMultiAccount
 		string pass;
 		bool isWindowMode = false;
 		AvaQuickBootClass a = null;
+		Timer closeTimer = null;
 		
 		private loginState()
 		{
@@ -27,6 +28,7 @@ namespace AVAQuickBootMultiAccount
 			this.pass = _pass;
 			this.isWindowMode = _isWindow;
 			InitializeComponent();
+			closeTimer = new Timer();
 			//login();
 		}
 
@@ -54,11 +56,15 @@ namespace AVAQuickBootMultiAccount
 			if (succeed)
 			{
 				System.Threading.Thread.Sleep(4000);
+				closeTimer.Interval = 4000;
+				closeTimer.Tick += new EventHandler(closeTimer_Tick);
+				closeTimer.Start();
 			}
 			else
 			{
 				this.TopMost = false;
-				MessageBox.Show("ログインに失敗しました", "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				string errorMessage = (a.getMessage.Length > 0) ? a.getMessage : "不明";
+				MessageBox.Show("ログインに失敗しました\n原因: " + errorMessage, "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 
 			this.Close();
@@ -79,5 +85,17 @@ namespace AVAQuickBootMultiAccount
 			else
 				p.Invoke();
 		}
+
+		private void closeTimer_Tick(object sender, EventArgs e)
+		{
+			closeTimer.Stop();
+			this.Close();
+		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			a.cancel();
+		}
+
 	}
 }

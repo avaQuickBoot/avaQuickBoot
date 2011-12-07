@@ -34,9 +34,9 @@
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.textBox3 = new System.Windows.Forms.TextBox();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -82,7 +82,7 @@
 			this.textBox2.Location = new System.Drawing.Point(72, 46);
 			this.textBox2.Name = "textBox2";
 			this.textBox2.Size = new System.Drawing.Size(284, 19);
-			this.textBox2.TabIndex = 2;
+			this.textBox2.TabIndex = 1;
 			// 
 			// textBox3
 			// 
@@ -91,17 +91,7 @@
 			this.textBox3.Location = new System.Drawing.Point(72, 71);
 			this.textBox3.Name = "textBox3";
 			this.textBox3.Size = new System.Drawing.Size(284, 19);
-			this.textBox3.TabIndex = 1;
-			// 
-			// checkBox1
-			// 
-			this.checkBox1.AutoSize = true;
-			this.checkBox1.Location = new System.Drawing.Point(72, 96);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(97, 16);
-			this.checkBox1.TabIndex = 3;
-			this.checkBox1.Text = "ウインドウモード";
-			this.checkBox1.UseVisualStyleBackColor = true;
+			this.textBox3.TabIndex = 2;
 			// 
 			// button1
 			// 
@@ -110,7 +100,7 @@
 			this.button1.Location = new System.Drawing.Point(192, 102);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(79, 30);
-			this.button1.TabIndex = 4;
+			this.button1.TabIndex = 3;
 			this.button1.Text = "追加";
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -122,10 +112,20 @@
 			this.button2.Location = new System.Drawing.Point(277, 102);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(79, 30);
-			this.button2.TabIndex = 5;
+			this.button2.TabIndex = 4;
 			this.button2.Text = "キャンセル";
 			this.button2.UseVisualStyleBackColor = true;
 			this.button2.Click += new System.EventHandler(this.button2_Click);
+			// 
+			// checkBox1
+			// 
+			this.checkBox1.AutoSize = true;
+			this.checkBox1.Location = new System.Drawing.Point(72, 96);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(97, 16);
+			this.checkBox1.TabIndex = 3;
+			this.checkBox1.Text = "ウインドウモード";
+			this.checkBox1.UseVisualStyleBackColor = true;
 			// 
 			// inputAccount
 			// 
@@ -161,8 +161,8 @@
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.TextBox textBox2;
 		private System.Windows.Forms.TextBox textBox3;
-		private System.Windows.Forms.CheckBox checkBox1;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.CheckBox checkBox1;
 	}
 }

@@ -26,10 +26,18 @@ namespace AvaQuickBoot
 		private AvaQuickBootClassParameter p;
 		WebBrowser webBrowser;
 		Timer loginTimer = new Timer();
-		int state = 0;
-		int loopCount = 0;
+		int state = 0;	//現在のステート
+		int loopCount = 0;	//何回doLogin()したか
+		int stateStayCount = 0;		//何回同じstateを試行したか
+		bool isCancel = false;
 		public EventHandler OnCompleteHandler;
 		public EventHandler OnStateChangeHandler;
+		string message = "";
+		public string getMessage
+		{
+			get { return message; }
+			set { }
+		}
 
 		public AvaQuickBootClass(string _accountid, string _password, bool _isWindowMode)
 		{
@@ -69,14 +77,10 @@ namespace AvaQuickBoot
 
 		void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
 		{
+			if (isCancel) return;
 			doLoginTimer(sender, e);
 		}
 
-		public WebBrowser getWebBrowser()
-		{
-			return webBrowser;	//debug用 実際の動作を目でみたい場合に
-		}
-		
 		/// <summary>
 		/// (たぶん)非同期でAVAにログインします
 		/// 内部状態が変化するとOnStateCHangeHandlerが、ログインが終了したらOnCompleteHandlerが呼ばれます
@@ -90,51 +94,90 @@ namespace AvaQuickBoot
 
 		void doLoginTimer(object sender, EventArgs e)
 		{
+			bool isOverLoopLimit = this.loopCount > p.loopLimit;
+			bool isOverStateStayLimit = this.stateStayCount > p.stateStayLimit;
+
+			#region ログイン出来ないときの処理
+			if (isCancel || isOverLoopLimit || isOverStateStayLimit)
+			{
+				if (isOverLoopLimit)
+					this.message = "ログイン試行回数";
+				if(isCancel)
+					this.message = "ログイン処理がキャンセルされました。";
+				if (isOverStateStayLimit)
+				{
+					switch (state)
+					{
+						case 0:
+							this.message = "AVAウェブサイトに接続出来ません。";
+							break;
+						case 1:
+							this.message = "アカウントにログインできません。";
+							break;
+						case 2:
+							this.message = "セキュリティーロック画面から移行できません。携帯電話を使用したワンタイムパスワードなどを設定している場合は解除してください。";
+							break;
+						case 3:
+							this.message = "起動に必要な鍵が取得できません。アカウント情報が間違っていないか確認してください。";
+							break;
+						default:
+							this.message = "不明な状態に遷移しています。";
+							break;
+					}
+				}
+
+				loginTimer.Stop();
+				OnCompleteHandler((object)false, e);
+				return;
+			}
+			#endregion
+
 			bool loginSucceed = doLogin();
 
-			if (this.loopCount > p.loopLimit || loginSucceed)
+			//ログイン成功
+			if (loginSucceed)
 			{
 				loginTimer.Stop();
 				System.Threading.Thread.Sleep(1000);
 				OnCompleteHandler((object)loginSucceed, e);
 			}
+			
 			System.Diagnostics.Debug.WriteLine("loopCount = " + loopCount);
 		 	System.Threading.Interlocked.Increment(ref this.loopCount);
 		}
 
 		bool doLogin()
 		{
-			if (state == 5)
+			//最終状態
+			if (state == 4)
 				return true;
 
+			bool isSucceed = false;
 			int previousState = state;
 
 			switch (state)
 			{
 				case 0:
-					if (logoutAva())
-						System.Threading.Interlocked.Increment(ref state);
+					isSucceed = logoutAva();
 					break;
 				case 1:
-					if(loginAva())
-						System.Threading.Interlocked.Increment(ref state);
+					isSucceed = loginAva();
 					break;
 				case 2:
-					if(skip1timePasswordPage())
-						System.Threading.Interlocked.Increment(ref state);
+					isSucceed = skip1timePasswordPage();
 					break;
 				case 3:
-					if(setWindowMode())
-						System.Threading.Interlocked.Increment(ref state);
-					break;
-				case 4:
-					if(executeAva())
-						System.Threading.Interlocked.Increment(ref state);
+					isSucceed = executeAva();
 					break;
 			}
 
-			if(previousState != state)
+			if (isSucceed)
+			{
+				System.Threading.Interlocked.Increment(ref state);
 				OnStateChangeHandler((object)state, null);
+			}
+			else
+				System.Threading.Interlocked.Increment(ref stateStayCount);
 
 			Debug.WriteLine("state = " + state);
 
@@ -185,24 +228,6 @@ namespace AvaQuickBoot
 			return true;
 		}
 
-		private bool setWindowMode()
-		{
-			if (webBrowser.IsBusy || webBrowser.ReadyState != WebBrowserReadyState.Complete)
-				return false;
-			if (!webBrowser.Url.Equals(p.targetUri))
-			{
-				webBrowser.Navigate(p.targetUri);
-				return false;
-			}
-			HtmlElementCollection windowModeElements = webBrowser.Document.All.GetElementsByName(p.windowModeCheckbox);
-			if (windowModeElements.Count < 1) return false;
-			
-			
-			webBrowser.Document.All.GetElementsByName(p.windowModeCheckbox)[0].SetAttribute("checked", (p.isWindowMode) ? "true" : "");
-			webBrowser.Document.InvokeScript(p.windowModeButton);
-			return true;
-		}
-
 		private bool executeAva()
 		{
 			if (webBrowser.IsBusy || webBrowser.ReadyState != WebBrowserReadyState.Complete)
@@ -233,6 +258,11 @@ namespace AvaQuickBoot
 			return true;
 		}
 
+		public void cancel()
+		{
+			isCancel = true;
+		}
+
 		void empty(object sender, EventArgs e) { /* 何もしません */ }
 	}
 
@@ -243,11 +273,10 @@ namespace AvaQuickBoot
 		public readonly string accountBox = "accountid";
 		public readonly string passwordBox = "password";
 		public readonly string loginButton = "fo_finish";
-		public readonly string windowModeButton = "set_window_mode";
-		public readonly string windowModeCheckbox = "window_mode";
 		public readonly string gameStartFlashButton = "flash_gamestart_loginSWF";
 		public readonly string gameStartFlashButtonArgument = "gameStart";
 		public readonly int loopLimit = 100;	//味付け 開発環境では、25回程度で起動
+		public int stateStayLimit = 30;		//同じステートを何回再試行するか
 		public readonly string gameStartRegex = @"gameStart\(\s*'(?<NUM1>([0-9])+)'\s*,\s*(?<NUM2>([0-9])+)\s*,\s*'(?<NUM3>([0-9])+)'\s*\)";
 
 		public string accountid = "";
@@ -273,6 +302,6 @@ namespace AvaQuickBoot
 		public void Dispose()
 		{
 		}
-
 	}
+
 }

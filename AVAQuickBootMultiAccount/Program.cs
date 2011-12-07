@@ -18,31 +18,36 @@ namespace AVAQuickBootMultiAccount
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 
-			mutex = new System.Threading.Mutex(false, @"{747690E4-BCE9-4949-9B79-FBAC7E700D63}");
-			if (!mutex.WaitOne(0, false))
+			try
 			{
-				Process prevProcess = GetPreviousProcess();
-				if (prevProcess != null && prevProcess.MainWindowHandle != IntPtr.Zero)
+				mutex = new System.Threading.Mutex(false, @"{747690E4-BCE9-4949-9B79-FBAC7E700D63}");
+				if (!mutex.WaitOne(0, false))
 				{
-					// 起動中のアプリケーションを最前面に表示
-					WakeupWindow(prevProcess.MainWindowHandle);
+					Process prevProcess = GetPreviousProcess();
+					if (prevProcess != null && prevProcess.MainWindowHandle != IntPtr.Zero)
+					{
+						// 起動中のアプリケーションを最前面に表示
+						WakeupWindow(prevProcess.MainWindowHandle);
+					}
+					return;
 				}
-				return;
-			}
 
-			switch (arg.Length)
+				switch (arg.Length)
+				{
+					case 0:
+						Application.Run(new Form1());
+						break;
+					case 3:
+						loginState form = new loginState(arg[0], arg[1], bool.Parse(arg[2]));
+						form.login();
+						Application.Run(form);
+						break;
+				}
+			}
+			finally
 			{
-				case 0:
-					Application.Run(new Form1());
-					break;
-				case 3:
-					loginState form = new loginState(arg[0], arg[1], bool.Parse(arg[2]));
-					form.login();
-					Application.Run(form);
-					break;
+				mutex.Close();
 			}
-
-			mutex.Close();
 		}
 
 
