@@ -39,9 +39,9 @@ namespace AvaQuickBoot
 			set { }
 		}
 
-		public AvaQuickBootClass(string _accountid, string _password, bool _isWindowMode)
+		public AvaQuickBootClass(string _accountid, string _password)
 		{
-			p = new AvaQuickBootClassParameter(_accountid, _password, _isWindowMode);
+			p = new AvaQuickBootClassParameter(_accountid, _password);
 			init();
 		}
 
@@ -281,17 +281,15 @@ namespace AvaQuickBoot
 
 		public string accountid = "";
 		public string password = "";
-		public bool isWindowMode = false;
 
 		public AvaQuickBootClassParameter()
 		{
 		}
 
-		public AvaQuickBootClassParameter(string _accountid, string _password, bool _isWindowMode)
+		public AvaQuickBootClassParameter(string _accountid, string _password)
 		{
 			accountid = _accountid;
 			password = _password;
-			isWindowMode = _isWindowMode;
 		}
 
 		~AvaQuickBootClassParameter()

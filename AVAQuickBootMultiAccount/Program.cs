@@ -37,8 +37,9 @@ namespace AVAQuickBootMultiAccount
 					case 0:
 						Application.Run(new Form1());
 						break;
-					case 3:
-						loginState form = new loginState(arg[0], arg[1], bool.Parse(arg[2]));
+					case 2:
+					case 3:	//ウインドウモードがあった頃の互換のため
+						loginState form = new loginState(arg[0], arg[1]);
 						form.login();
 						Application.Run(form);
 						break;

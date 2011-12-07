@@ -36,7 +36,7 @@
 			// 
 			this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.progressBar1.Location = new System.Drawing.Point(12, 98);
+			this.progressBar1.Location = new System.Drawing.Point(12, 57);
 			this.progressBar1.Maximum = 4;
 			this.progressBar1.Name = "progressBar1";
 			this.progressBar1.Size = new System.Drawing.Size(226, 24);
@@ -44,7 +44,7 @@
 			// 
 			// button1
 			// 
-			this.button1.Location = new System.Drawing.Point(70, 43);
+			this.button1.Location = new System.Drawing.Point(70, 12);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(111, 31);
 			this.button1.TabIndex = 2;
@@ -56,7 +56,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(250, 134);
+			this.ClientSize = new System.Drawing.Size(250, 93);
 			this.ControlBox = false;
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.progressBar1);

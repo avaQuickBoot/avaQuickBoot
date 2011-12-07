@@ -31,7 +31,6 @@
 			this.components = new System.ComponentModel.Container();
 			this.listView1 = new System.Windows.Forms.ListView();
 			this.Nickname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.WindowMode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.編集ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,8 +48,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Nickname,
-            this.WindowMode});
+            this.Nickname});
 			this.listView1.ContextMenuStrip = this.contextMenuStrip1;
 			this.listView1.FullRowSelect = true;
 			this.listView1.GridLines = true;
@@ -67,12 +65,7 @@
 			// Nickname
 			// 
 			this.Nickname.Text = "名前";
-			this.Nickname.Width = 300;
-			// 
-			// WindowMode
-			// 
-			this.WindowMode.Text = "ウインドウモード";
-			this.WindowMode.Width = 100;
+			this.Nickname.Width = 520;
 			// 
 			// contextMenuStrip1
 			// 
@@ -149,7 +142,6 @@
 
 		private System.Windows.Forms.ListView listView1;
 		private System.Windows.Forms.ColumnHeader Nickname;
-		private System.Windows.Forms.ColumnHeader WindowMode;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem 編集ToolStripMenuItem;

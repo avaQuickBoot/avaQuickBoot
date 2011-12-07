@@ -60,7 +60,6 @@ namespace AVAQuickBootMultiAccount
 		void addListView(Account account)
 		{
 			ListViewItem cItem = new ListViewItem(account.nickName);
-			cItem.SubItems.Add(account.isWindow.ToString());
 			cItem.SubItems.Add(account.guid);
 			listView1.Items.Add(cItem);
 		}
@@ -71,7 +70,7 @@ namespace AVAQuickBootMultiAccount
 			for (int i = 0; i < listView1.Items.Count; i++)
 			{
 				//GUID
-				if (listView1.Items[i].SubItems[2].Text.Equals(account.guid))
+				if (getGuidFromListViewSelectedItem().Equals(account.guid))
 				{
 					listView1.Items.RemoveAt(i);
 				}
@@ -100,13 +99,13 @@ namespace AVAQuickBootMultiAccount
 		private void launchAva(object sender, EventArgs e)
 		{
 			if (listView1.SelectedItems.Count < 1) return;
-			string guid = listView1.SelectedItems[0].SubItems[2].Text;
+			string guid = getGuidFromListViewSelectedItem();
 
 			foreach (Account account in accountList)
 			{
 				if (account.guid.Equals(guid))
 				{
-					loginState form = new loginState(account.id, account.password, account.isWindow);
+					loginState form = new loginState(account.id, account.password);
 					form.login();
 					form.ShowDialog();
 				}
@@ -150,7 +149,7 @@ namespace AVAQuickBootMultiAccount
 		{
 			Account account = new Account();
 			if (listView1.SelectedItems.Count < 1) return;
-			string guid = listView1.SelectedItems[0].SubItems[2].Text;
+			string guid = getGuidFromListViewSelectedItem();
 
 			foreach (Account a in accountList)
 			{
@@ -174,14 +173,14 @@ namespace AVAQuickBootMultiAccount
 				return;
 			}
 			
-			string guid = listView1.SelectedItems[0].SubItems[2].Text;
-			removeAccout(new Account("", "", "", false, guid));
+			string guid = listView1.SelectedItems[0].SubItems[1].Text;
+			removeAccout(new Account("", "", "", guid));
 		}
 
 		private void ショートカット作成ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (listView1.SelectedItems.Count < 1) return;
-			string guid = listView1.SelectedItems[0].SubItems[2].Text;
+			string guid = getGuidFromListViewSelectedItem();
 			Account account = null;
 
 			foreach (Account a in accountList)
@@ -195,7 +194,7 @@ namespace AVAQuickBootMultiAccount
 
 
 			System.Windows.Forms.SaveFileDialog saveDialog = new SaveFileDialog();
-			string arg = " \"" + account.id + "\" \"" + account.password + "\" \"" + account.isWindow.ToString() + "\"";
+			string arg = " \"" + account.id + "\" \"" + account.password + "\"";
 
 			saveDialog.FileName = "AVA_" + account.nickName;
 			saveDialog.Filter = "shortcut file|*.lnk";
@@ -218,6 +217,12 @@ namespace AVAQuickBootMultiAccount
 		{
 			if (listView1.SelectedItems.Count < 1) return;
 			launchAva(sender, e);
+		}
+
+		private string getGuidFromListViewSelectedItem()
+		{
+			if (listView1.SelectedItems.Count < 1) return "";
+			return listView1.SelectedItems[0].SubItems[1].Text;
 		}
 
 	}

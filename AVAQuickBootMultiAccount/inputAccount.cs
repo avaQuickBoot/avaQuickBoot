@@ -15,7 +15,7 @@ namespace AVAQuickBootMultiAccount
 
 		public inputAccount()
 		{
-			account = new Account("", "", "", false, System.Guid.NewGuid().ToString());
+			account = new Account("", "", "", System.Guid.NewGuid().ToString());
 			init();
 			button1.Text = "追加";
 		}
@@ -35,7 +35,6 @@ namespace AVAQuickBootMultiAccount
 			textBox1.Text = account.nickName;
 			textBox2.Text = account.id;
 			textBox3.Text = account.password;
-			checkBox1.Checked = account.isWindow;
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -44,7 +43,6 @@ namespace AVAQuickBootMultiAccount
 			account.nickName = textBox1.Text;
 			account.id = textBox2.Text;
 			account.password = textBox3.Text;
-			account.isWindow = checkBox1.Checked;
 
 			OnAccountChangedHandler((object)account, e);
 		}

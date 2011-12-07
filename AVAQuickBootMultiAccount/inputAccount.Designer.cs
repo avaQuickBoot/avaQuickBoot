@@ -36,7 +36,6 @@
 			this.textBox3 = new System.Windows.Forms.TextBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -117,16 +116,6 @@
 			this.button2.UseVisualStyleBackColor = true;
 			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
-			// checkBox1
-			// 
-			this.checkBox1.AutoSize = true;
-			this.checkBox1.Location = new System.Drawing.Point(72, 96);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(97, 16);
-			this.checkBox1.TabIndex = 3;
-			this.checkBox1.Text = "ウインドウモード";
-			this.checkBox1.UseVisualStyleBackColor = true;
-			// 
 			// inputAccount
 			// 
 			this.AcceptButton = this.button1;
@@ -135,7 +124,6 @@
 			this.ClientSize = new System.Drawing.Size(368, 144);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
-			this.Controls.Add(this.checkBox1);
 			this.Controls.Add(this.textBox3);
 			this.Controls.Add(this.textBox2);
 			this.Controls.Add(this.textBox1);
@@ -163,6 +151,5 @@
 		private System.Windows.Forms.TextBox textBox3;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.CheckBox checkBox1;
 	}
 }

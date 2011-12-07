@@ -13,7 +13,6 @@ namespace AVAQuickBootMultiAccount
 	{
 		string id;
 		string pass;
-		bool isWindowMode = false;
 		AvaQuickBootClass a = null;
 		Timer closeTimer = null;
 		
@@ -22,11 +21,10 @@ namespace AVAQuickBootMultiAccount
 			InitializeComponent();
 		}
 
-		public loginState(string _id, string _pass, bool _isWindow)
+		public loginState(string _id, string _pass)
 		{
 			this.id = _id;
 			this.pass = _pass;
-			this.isWindowMode = _isWindow;
 			InitializeComponent();
 			closeTimer = new Timer();
 			//login();
@@ -43,7 +41,7 @@ namespace AVAQuickBootMultiAccount
 
 		public void login()
 		{
-			a = new AvaQuickBootClass(this.id, this.pass, this.isWindowMode);
+			a = new AvaQuickBootClass(this.id, this.pass);
 			a.OnCompleteHandler += new EventHandler(completed);
 			a.OnStateChangeHandler += new EventHandler(stateChanged);
 			a.doLoginAsync();
