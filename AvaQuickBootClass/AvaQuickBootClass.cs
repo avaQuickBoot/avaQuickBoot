@@ -77,7 +77,9 @@ namespace AvaQuickBoot
 
 		void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
 		{
-			if (isCancel) return;
+			bool isOverLoopLimit = this.loopCount > p.loopLimit;
+			bool isOverStateStayLimit = this.stateStayCount > p.stateStayLimit;
+			if (isCancel || isOverLoopLimit || isOverStateStayLimit) return;
 			doLoginTimer(sender, e);
 		}
 
@@ -276,7 +278,7 @@ namespace AvaQuickBoot
 		public readonly string gameStartFlashButton = "flash_gamestart_loginSWF";
 		public readonly string gameStartFlashButtonArgument = "gameStart";
 		public readonly int loopLimit = 100;	//味付け 開発環境では、25回程度で起動
-		public int stateStayLimit = 30;		//同じステートを何回再試行するか
+		public int stateStayLimit = 50;		//同じステートを何回再試行するか
 		public readonly string gameStartRegex = @"gameStart\(\s*'(?<NUM1>([0-9])+)'\s*,\s*(?<NUM2>([0-9])+)\s*,\s*'(?<NUM3>([0-9])+)'\s*\)";
 
 		public string accountid = "";
