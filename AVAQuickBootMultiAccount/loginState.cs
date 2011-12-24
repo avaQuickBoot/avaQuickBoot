@@ -11,23 +11,31 @@ namespace AVAQuickBootMultiAccount
 {
 	public partial class loginState : Form, IDisposable
 	{
-		string id;
-		string pass;
+		Account account;
 		AvaQuickBootClass a = null;
 		Timer closeTimer = null;
 		
 		private loginState()
 		{
-			InitializeComponent();
+			init();
+		}
+
+		public loginState(Account _account)
+		{
+			init();
+			account = _account;
 		}
 
 		public loginState(string _id, string _pass)
 		{
-			this.id = _id;
-			this.pass = _pass;
+			init();
+			account = new Account(_id, _pass, "", "");
+		}
+
+		void init()
+		{
 			InitializeComponent();
 			closeTimer = new Timer();
-			//login();
 		}
 
 		~loginState()
@@ -41,9 +49,10 @@ namespace AVAQuickBootMultiAccount
 
 		public void login()
 		{
-			a = new AvaQuickBootClass(this.id, this.pass);
+			a = new AvaQuickBootClass(account.id, account.password);	//Account.csとAvaQuickBootClass.csは別物なのでAccountのインターフェースを持ちません
 			a.OnCompleteHandler += new EventHandler(completed);
 			a.OnStateChangeHandler += new EventHandler(stateChanged);
+			this.progressBar1.Maximum = a.getFinalStateNumber;
 			a.doLoginAsync();
 		}
 
@@ -53,8 +62,8 @@ namespace AVAQuickBootMultiAccount
 			bool succeed = (bool)sender;
 			if (succeed)
 			{
-				System.Threading.Thread.Sleep(4000);
-				closeTimer.Interval = 4000;
+				this.Refresh();	//この時点でformはbusy
+				closeTimer.Interval = 10000;
 				closeTimer.Tick += new EventHandler(closeTimer_Tick);
 				closeTimer.Start();
 			}
@@ -86,6 +95,7 @@ namespace AVAQuickBootMultiAccount
 
 		private void closeTimer_Tick(object sender, EventArgs e)
 		{
+			System.Threading.Thread.Sleep(4000);
 			closeTimer.Stop();
 			this.Close();
 		}

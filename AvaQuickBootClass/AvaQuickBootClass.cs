@@ -23,6 +23,7 @@ namespace AvaQuickBoot
 {
 	public class AvaQuickBootClass : IDisposable
 	{
+#region 変数等定義
 		private AvaQuickBootClassParameter p;
 		WebBrowser webBrowser;
 		Timer loginTimer = new Timer();
@@ -38,6 +39,12 @@ namespace AvaQuickBoot
 			get { return message; }
 			set { }
 		}
+		public int getFinalStateNumber
+		{
+			get { return p.finalStateNumber; }
+			set { }
+		}
+#endregion
 
 		public AvaQuickBootClass(string _accountid, string _password)
 		{
@@ -57,7 +64,7 @@ namespace AvaQuickBoot
 			loopCount = 0;
 			//第一引数bool ログオンが完了したか true:完了, false:失敗
 			OnCompleteHandler += new EventHandler(empty);			 
-			//第一引数int 内部状態 0~5(変更あるかも どこに最大値を入れようか...)
+			//第一引数int 内部状態 0~getFinalStateNumber(p.finalStateNumber)
 			OnStateChangeHandler += new EventHandler(empty);
 			webBrowser = new WebBrowser();
 			webBrowser.AllowNavigation = true;
@@ -99,7 +106,7 @@ namespace AvaQuickBoot
 			bool isOverLoopLimit = this.loopCount > p.loopLimit;
 			bool isOverStateStayLimit = this.stateStayCount > p.stateStayLimit;
 
-			#region ログイン出来ないときの処理
+#region ログイン出来ないときの処理
 			if (isCancel || isOverLoopLimit || isOverStateStayLimit)
 			{
 				if (isOverLoopLimit)
@@ -132,7 +139,7 @@ namespace AvaQuickBoot
 				OnCompleteHandler((object)false, e);
 				return;
 			}
-			#endregion
+#endregion
 
 			bool loginSucceed = doLogin();
 
@@ -148,10 +155,10 @@ namespace AvaQuickBoot
 		 	System.Threading.Interlocked.Increment(ref this.loopCount);
 		}
 
-		bool doLogin()
+		bool doLogin()	//同時に複数走る可能性がある
 		{
-			//最終状態
-			if (state == 4)
+			//最終状態なら
+			if (state == p.finalStateNumber)
 				return true;
 
 			bool isSucceed = false;
@@ -173,15 +180,19 @@ namespace AvaQuickBoot
 					break;
 			}
 
-			if (isSucceed)
+			if (isSucceed)	//ステート処理成功
 			{
 				System.Threading.Interlocked.Increment(ref state);
+				System.Threading.Interlocked.Exchange(ref stateStayCount, 0);	// state = 0;
 				OnStateChangeHandler((object)state, null);
 			}
 			else
+			{
 				System.Threading.Interlocked.Increment(ref stateStayCount);
+			}
 
 			Debug.WriteLine("state = " + state);
+			Debug.WriteLine("stateStayCount = " + stateStayCount);
 
 			return false;
 		}
@@ -249,11 +260,9 @@ namespace AvaQuickBoot
 			}
 			if (reg == null || !reg.Success) return false;
 
-			Debug.WriteLine("num1 = " + reg.Groups["NUM1"]);
-			Debug.WriteLine("num2 = " + reg.Groups["NUM2"]);
-			Debug.WriteLine("num3 = " + reg.Groups["NUM3"]);
-
 			string[] gameParam = { reg.Groups["NUM1"].Value, reg.Groups["NUM2"].Value, reg.Groups["NUM3"].Value };
+			for (int i = 0; i < gameParam.Length; i++)
+				Debug.WriteLine("num" + i + " = " + gameParam[i]);
 
 			webBrowser.Document.InvokeScript("gameStart", gameParam);
 
@@ -277,9 +286,10 @@ namespace AvaQuickBoot
 		public readonly string loginButton = "fo_finish";
 		public readonly string gameStartFlashButton = "flash_gamestart_loginSWF";
 		public readonly string gameStartFlashButtonArgument = "gameStart";
-		public readonly int loopLimit = 100;	//味付け 開発環境では、25回程度で起動
-		public int stateStayLimit = 50;		//同じステートを何回再試行するか
+		public int loopLimit = 100;	//味付け 開発環境では、25回程度で起動
+		public int stateStayLimit = 30;		//同じステートを何回再試行するか
 		public readonly string gameStartRegex = @"gameStart\(\s*'(?<NUM1>([0-9])+)'\s*,\s*(?<NUM2>([0-9])+)\s*,\s*'(?<NUM3>([0-9])+)'\s*\)";
+		public readonly int finalStateNumber = 4;
 
 		public string accountid = "";
 		public string password = "";

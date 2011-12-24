@@ -18,11 +18,11 @@ namespace AVAQuickBootMultiAccount
 
 			FileVersionInfo ver = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
 			this.Text = ver.ProductName + " ver: " + ver.ProductVersion;
-			loadXml();
-			loadAccount();
+			loadAccountFromXml();
+			loadListviewItemsFromAccount();
 		}
 
-		void loadXml()
+		void loadAccountFromXml()
 		{
 			try
 			{
@@ -40,7 +40,7 @@ namespace AVAQuickBootMultiAccount
 			}
 		}
 
-		void loadAccount()
+		void loadListviewItemsFromAccount()
 		{
 			foreach (Account account in accountList)
 			{
