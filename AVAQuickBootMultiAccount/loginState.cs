@@ -63,7 +63,8 @@ namespace AVAQuickBootMultiAccount
 			if (succeed)
 			{
 				this.Refresh();	//この時点でformはbusy
-				closeTimer.Interval = 10000;
+				this.TopMost = false;
+				closeTimer.Interval = 3000;
 				closeTimer.Tick += new EventHandler(closeTimer_Tick);
 				closeTimer.Start();
 			}
@@ -72,9 +73,8 @@ namespace AVAQuickBootMultiAccount
 				this.TopMost = false;
 				string errorMessage = (a.getMessage.Length > 0) ? a.getMessage : "不明";
 				MessageBox.Show("ログインに失敗しました\n原因: " + errorMessage, "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				this.Close();
 			}
-
-			this.Close();
 		}
 
 		private void stateChanged(object sender, EventArgs e)
@@ -95,8 +95,8 @@ namespace AVAQuickBootMultiAccount
 
 		private void closeTimer_Tick(object sender, EventArgs e)
 		{
-			System.Threading.Thread.Sleep(4000);
 			closeTimer.Stop();
+			//System.Threading.Thread.Sleep(3000);
 			this.Close();
 		}
 
