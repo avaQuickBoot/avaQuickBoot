@@ -195,7 +195,7 @@ namespace AVAQuickBootMultiAccount
 
 
 			System.Windows.Forms.SaveFileDialog saveDialog = new SaveFileDialog();
-			string arg = " \"" + account.id + "\" \"" + account.password + "\"";
+			string arg = " \"" + account.id + "\" \"" + account.password + "\" \"" + account.startMumble.ToString() + "\"";
 
 			saveDialog.FileName = "AVA_" + account.nickName;
 			saveDialog.Filter = "shortcut file|*.lnk";
