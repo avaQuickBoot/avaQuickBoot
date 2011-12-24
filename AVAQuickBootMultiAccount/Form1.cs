@@ -60,6 +60,7 @@ namespace AVAQuickBootMultiAccount
 		void addListView(Account account)
 		{
 			ListViewItem cItem = new ListViewItem(account.nickName);
+			cItem.SubItems.Add(account.startMumble ? "Yes" : "No");
 			cItem.SubItems.Add(account.guid);
 			listView1.Items.Add(cItem);
 		}
@@ -70,7 +71,7 @@ namespace AVAQuickBootMultiAccount
 			for (int i = 0; i < listView1.Items.Count; i++)
 			{
 				//GUID
-				if (getGuidFromListViewSelectedItem().Equals(account.guid))
+				if (listView1.Items[i].SubItems[2].Text.Equals(account.guid))
 				{
 					listView1.Items.RemoveAt(i);
 				}
@@ -105,7 +106,7 @@ namespace AVAQuickBootMultiAccount
 			{
 				if (account.guid.Equals(guid))
 				{
-					loginState form = new loginState(account.id, account.password);
+					loginState form = new loginState(account.id, account.password, account.startMumble);
 					form.login();
 					form.ShowDialog();
 				}
@@ -172,9 +173,9 @@ namespace AVAQuickBootMultiAccount
 			{
 				return;
 			}
-			
-			string guid = listView1.SelectedItems[0].SubItems[1].Text;
-			removeAccout(new Account("", "", "", guid));
+
+			string guid = getGuidFromListViewSelectedItem();
+			removeAccout(new Account("", "", "", guid, false));
 		}
 
 		private void ショートカット作成ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -222,7 +223,7 @@ namespace AVAQuickBootMultiAccount
 		private string getGuidFromListViewSelectedItem()
 		{
 			if (listView1.SelectedItems.Count < 1) return "";
-			return listView1.SelectedItems[0].SubItems[1].Text;
+			return listView1.SelectedItems[0].SubItems[2].Text;
 		}
 
 	}

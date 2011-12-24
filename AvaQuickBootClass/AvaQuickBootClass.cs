@@ -46,9 +46,9 @@ namespace AvaQuickBoot
 		}
 #endregion
 
-		public AvaQuickBootClass(string _accountid, string _password)
+		public AvaQuickBootClass(string _accountid, string _password, bool _startMumble)
 		{
-			p = new AvaQuickBootClassParameter(_accountid, _password);
+			p = new AvaQuickBootClassParameter(_accountid, _password, _startMumble);
 			init();
 		}
 
@@ -264,7 +264,8 @@ namespace AvaQuickBoot
 			for (int i = 0; i < gameParam.Length; i++)
 				Debug.WriteLine("num" + i + " = " + gameParam[i]);
 
-			webBrowser.Document.InvokeScript("gameStart", gameParam);
+			webBrowser.Document.InvokeScript(p.gameStartFlashButtonArgument, gameParam);
+			if (p.startMumble) webBrowser.Document.InvokeScript(p.mumbleStartButton);
 
 			return true;
 		}
@@ -286,6 +287,7 @@ namespace AvaQuickBoot
 		public readonly string loginButton = "fo_finish";
 		public readonly string gameStartFlashButton = "flash_gamestart_loginSWF";
 		public readonly string gameStartFlashButtonArgument = "gameStart";
+		public readonly string mumbleStartButton = "readyVoicechat";
 		public int loopLimit = 100;	//味付け 開発環境では、25回程度で起動
 		public int stateStayLimit = 30;		//同じステートを何回再試行するか
 		public readonly string gameStartRegex = @"gameStart\(\s*'(?<NUM1>([0-9])+)'\s*,\s*(?<NUM2>([0-9])+)\s*,\s*'(?<NUM3>([0-9])+)'\s*\)";
@@ -293,15 +295,17 @@ namespace AvaQuickBoot
 
 		public string accountid = "";
 		public string password = "";
+		public bool startMumble = false;
 
 		public AvaQuickBootClassParameter()
 		{
 		}
 
-		public AvaQuickBootClassParameter(string _accountid, string _password)
+		public AvaQuickBootClassParameter(string _accountid, string _password, bool _startMumble)
 		{
 			accountid = _accountid;
 			password = _password;
+			startMumble = _startMumble;
 		}
 
 		~AvaQuickBootClassParameter()

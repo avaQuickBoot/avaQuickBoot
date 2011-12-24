@@ -26,10 +26,10 @@ namespace AVAQuickBootMultiAccount
 			account = _account;
 		}
 
-		public loginState(string _id, string _pass)
+		public loginState(string _id, string _pass, bool _startMumble)
 		{
 			init();
-			account = new Account(_id, _pass, "", "");
+			account = new Account(_id, _pass, "", "", _startMumble);
 		}
 
 		void init()
@@ -49,7 +49,7 @@ namespace AVAQuickBootMultiAccount
 
 		public void login()
 		{
-			a = new AvaQuickBootClass(account.id, account.password);	//Account.csとAvaQuickBootClass.csは別物なのでAccountのインターフェースを持ちません
+			a = new AvaQuickBootClass(account.id, account.password, account.startMumble);	//Account.csとAvaQuickBootClass.csは別物なのでAccountのインターフェースを持ちません
 			a.OnCompleteHandler += new EventHandler(completed);
 			a.OnStateChangeHandler += new EventHandler(stateChanged);
 			this.progressBar1.Maximum = a.getFinalStateNumber;

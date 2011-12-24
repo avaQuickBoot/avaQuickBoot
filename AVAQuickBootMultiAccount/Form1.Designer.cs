@@ -39,6 +39,7 @@
 			this.ショートカット作成ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.button2 = new System.Windows.Forms.Button();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.startMumble = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -48,7 +49,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Nickname});
+            this.Nickname,
+            this.startMumble});
 			this.listView1.ContextMenuStrip = this.contextMenuStrip1;
 			this.listView1.FullRowSelect = true;
 			this.listView1.GridLines = true;
@@ -65,7 +67,7 @@
 			// Nickname
 			// 
 			this.Nickname.Text = "名前";
-			this.Nickname.Width = 520;
+			this.Nickname.Width = 400;
 			// 
 			// contextMenuStrip1
 			// 
@@ -122,6 +124,11 @@
 			this.button2.UseVisualStyleBackColor = true;
 			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
+			// startMumble
+			// 
+			this.startMumble.Text = "Mumbleを起動する";
+			this.startMumble.Width = 120;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -150,6 +157,7 @@
 		private System.Windows.Forms.ToolStripMenuItem ショートカット作成ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
 		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.ColumnHeader startMumble;
 
 	}
 }
