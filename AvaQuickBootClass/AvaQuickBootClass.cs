@@ -71,6 +71,7 @@ namespace AvaQuickBoot
 			OnCompleteHandler += new EventHandler(empty);			 
 			//第一引数int 内部状態 0~getFinalStateNumber(p.finalStateNumber)
 			OnStateChangeHandler += new EventHandler(empty);
+			//第一引数List<AvaNew>
 			OnGetNewsHandler += new EventHandler(empty);
 			webBrowser = new WebBrowser();
 			webBrowser.AllowNavigation = true;
@@ -179,7 +180,7 @@ namespace AvaQuickBoot
 					break;
 				case 1:
 					if (parseAvaNews()) OnGetNewsHandler(avaNews, null);
-					isSucceed = true;	//データが取ってこれる保証はない 取れなくても別に致命的ではない
+					isSucceed = true;	//データが取ってこれる保証はない しかし取れなくても別に致命的ではない
 					break;
 				case 2:
 					isSucceed = loginAva();
@@ -326,7 +327,7 @@ namespace AvaQuickBoot
 
 				if (isGetDate)
 				{
-					avaNews.Add(avaNew.Clone() as AvaNew);
+					avaNews.Add(avaNew.Clone() as AvaNew);	//AvaNewは参照型のため、Cloneしないとaddしたものが全て同じオブジェクトを参照してしまう。
 				}
 			}
 

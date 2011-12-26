@@ -101,15 +101,25 @@ namespace AVAQuickBootMultiAccount
 		private void getAvaNews(object sender, EventArgs e)
 		{
 			System.Diagnostics.Debug.WriteLine("Called getAvaNews()");
-			List<AvaNew> news = sender as List<AvaNew>;
-			foreach(AvaNew avanew in news)
+
+			MethodInvoker p = (MethodInvoker)delegate
 			{
-				ListViewItem cItem = new ListViewItem(avanew.genre);
-				cItem.SubItems.Add(avanew.content);
-				cItem.SubItems.Add(avanew.date);
-				cItem.SubItems.Add(avanew.url);
-				listView1.Items.Add(cItem);
-			}
+				List<AvaNew> news = sender as List<AvaNew>;
+				foreach (AvaNew avanew in news)
+				{
+					ListViewItem cItem = new ListViewItem(avanew.genre);
+					cItem.SubItems.Add(avanew.content);
+					cItem.SubItems.Add(avanew.date);
+					cItem.SubItems.Add(avanew.url);
+					listView1.Items.Add(cItem);
+				}
+			};
+
+			if (this.listView1.InvokeRequired)
+				this.listView1.Invoke(p);
+			else
+				p.Invoke();
+
 		}
 
 		private void closeTimer_Tick(object sender, EventArgs e)
@@ -126,6 +136,7 @@ namespace AVAQuickBootMultiAccount
 
 		private void listView1_DoubleClick(object sender, EventArgs e)
 		{
+			if (listView1.SelectedItems.Count < 1) return;
 			System.Diagnostics.Process.Start(getUrlFromListViewSelectedItem());
 		}
 
