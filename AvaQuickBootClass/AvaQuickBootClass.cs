@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Collections.Generic;
+
 
 /*こいつがやること
  * 外からインスタンス生成
@@ -31,9 +33,12 @@ namespace AvaQuickBoot
 		int loopCount = 0;	//何回doLogin()したか
 		int stateStayCount = 0;		//何回同じstateを試行したか
 		bool isCancel = false;
+		string message = "";
 		public EventHandler OnCompleteHandler;
 		public EventHandler OnStateChangeHandler;
-		string message = "";
+		public EventHandler OnGetNewsHandler;
+		List<AvaNew> avaNews = new List<AvaNew>();
+
 		public string getMessage
 		{
 			get { return message; }
@@ -66,6 +71,7 @@ namespace AvaQuickBoot
 			OnCompleteHandler += new EventHandler(empty);			 
 			//第一引数int 内部状態 0~getFinalStateNumber(p.finalStateNumber)
 			OnStateChangeHandler += new EventHandler(empty);
+			OnGetNewsHandler += new EventHandler(empty);
 			webBrowser = new WebBrowser();
 			webBrowser.AllowNavigation = true;
 			webBrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
@@ -81,6 +87,8 @@ namespace AvaQuickBoot
 		{
 			if (p != null) p.Dispose();
 		}
+
+		
 
 		void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
 		{
@@ -170,12 +178,16 @@ namespace AvaQuickBoot
 					isSucceed = logoutAva();
 					break;
 				case 1:
-					isSucceed = loginAva();
+					if (parseAvaNews()) OnGetNewsHandler(avaNews, null);
+					isSucceed = true;	//データが取ってこれる保証はない 取れなくても別に致命的ではない
 					break;
 				case 2:
-					isSucceed = skip1timePasswordPage();
+					isSucceed = loginAva();
 					break;
 				case 3:
+					isSucceed = skip1timePasswordPage();
+					break;
+				case 4:
 					isSucceed = executeAva();
 					break;
 			}
@@ -201,8 +213,9 @@ namespace AvaQuickBoot
 		{
 			if (webBrowser.IsBusy || webBrowser.ReadyState != WebBrowserReadyState.Complete)
 				return false;
+			if (!webBrowser.Url.Equals(p.targetUri))
+				return false;
 
-			//p.webBrowser.Navigate(p.logoutUri);
 			return true;
 		}
 
@@ -270,6 +283,58 @@ namespace AvaQuickBoot
 			return true;
 		}
 
+		bool parseAvaNews()
+		{
+			HtmlElement newsContentHe = webBrowser.Document.GetElementById("news1");
+			if (newsContentHe == null) return false;
+
+			HtmlElementCollection heCollection = newsContentHe.All;
+			List<HtmlElement> contentHeList = new List<HtmlElement>();
+			foreach (HtmlElement he in heCollection)
+			{
+				if (he.TagName == "LI" && he.GetAttribute("ClassName") == "normal")
+				{
+					foreach (HtmlElement he2 in he.All)
+					{
+						contentHeList.Add(he2);
+					}
+				}
+			}
+			if (contentHeList.Count == 0) return false;
+
+			AvaNew avaNew = new AvaNew();
+			foreach (HtmlElement he in contentHeList)
+			{
+				bool isGetDate = false;
+
+				if (he.TagName == "DIV" && he.GetAttribute("ClassName") == "iocn")
+				{
+					if (he.All.Count == 0) return false;
+					avaNew.genre = he.All[0].GetAttribute("Alt");
+				}
+				if (he.TagName == "DIV" && he.GetAttribute("ClassName") == "cont")
+				{
+					if (he.All.Count == 0) return false;
+					avaNew.content = he.All[0].InnerText.Replace("\r\n", "");
+					avaNew.url = he.All[0].GetAttribute("Href");
+				}
+				if (he.TagName == "DIV" && he.GetAttribute("ClassName") == "date")
+				{
+					avaNew.date = he.InnerText;
+					isGetDate = true;
+				}
+
+				if (isGetDate)
+				{
+					avaNews.Add(avaNew.Clone() as AvaNew);
+				}
+			}
+
+			if (avaNews.Count > 0)
+				return true;
+			return false;
+		}
+
 		public void cancel()
 		{
 			isCancel = true;
@@ -291,7 +356,7 @@ namespace AvaQuickBoot
 		public int loopLimit = 100;	//味付け 開発環境では、25回程度で起動
 		public int stateStayLimit = 30;		//同じステートを何回再試行するか
 		public readonly string gameStartRegex = @"gameStart\(\s*'(?<NUM1>([0-9])+)'\s*,\s*(?<NUM2>([0-9])+)\s*,\s*'(?<NUM3>([0-9])+)'\s*\)";
-		public readonly int finalStateNumber = 4;
+		public readonly int finalStateNumber = 5;
 
 		public string accountid = "";
 		public string password = "";

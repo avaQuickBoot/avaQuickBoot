@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AvaNew.cs" />
     <Compile Include="AvaQuickBootClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
