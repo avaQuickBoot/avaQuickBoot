@@ -107,7 +107,6 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "AVA Login";
-			this.TopMost = true;
 			this.ResumeLayout(false);
 
 		}
