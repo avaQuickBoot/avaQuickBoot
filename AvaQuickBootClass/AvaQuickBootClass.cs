@@ -74,9 +74,12 @@ namespace AvaQuickBoot
 			//第一引数List<AvaNew>
 			OnGetNewsHandler += new EventHandler(empty);
 			webBrowser = new WebBrowser();
+			webBrowser.AllowWebBrowserDrop = false;
+			webBrowser.ScriptErrorsSuppressed = true;
 			webBrowser.AllowNavigation = true;
 			webBrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
-			webBrowser.Navigate(p.logoutUri);
+			//webBrowser.Navigate(p.logoutUri);
+			webBrowser.Navigate(p.targetUri);
 		}
 
 		~AvaQuickBootClass()
