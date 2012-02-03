@@ -306,10 +306,12 @@ namespace AvaQuickBoot
 							if (he2.TagName == "A")
 							{
 								System.Diagnostics.Debug.WriteLine(he2.InnerText);
+								System.Diagnostics.Debug.WriteLine(he2.GetAttribute("Href"));
 								AvaNew avaImpNew = new AvaNew();
 								avaImpNew.genre = "重要なお知らせ";
 								avaImpNew.content = he2.InnerText;
 								avaImpNew.date = "";
+								avaImpNew.url = he2.GetAttribute("Href");
 								avaNews.Add(avaImpNew);
 							}
 						}
