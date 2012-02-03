@@ -136,7 +136,8 @@ namespace AvaQuickBoot
 							this.message = "アカウントにログインできません。";
 							break;
 						case 2:
-							this.message = "セキュリティーロック画面から移行できません。携帯電話を使用したワンタイムパスワードなどを設定している場合は解除してください。";
+							this.message = "セキュリティーロック画面から移行できません。携帯電話を使用したワンタイムパスワードなどを設定している場合は解除してください。"
+								+ "\nメンテナンス中の可能性もあります。";
 							break;
 						case 3:
 							this.message = "起動に必要な鍵が取得できません。アカウント情報が間違っていないか確認してください。";
@@ -289,6 +290,35 @@ namespace AvaQuickBoot
 
 		bool parseAvaNews()
 		{
+			//重要なお知らせ(取得できない可能性がある)
+			while (true)
+			{
+				HtmlElement impHe = webBrowser.Document.GetElementById("news_container");
+				if (impHe == null) break;
+
+				HtmlElementCollection impHeCollection = impHe.All;
+				foreach (HtmlElement he in impHeCollection)
+				{
+					if (he.TagName == "DIV" && he.GetAttribute("ClassName") == "win_imp")
+					{
+						foreach (HtmlElement he2 in he.All)
+						{
+							if (he2.TagName == "A")
+							{
+								System.Diagnostics.Debug.WriteLine(he2.InnerText);
+								AvaNew avaImpNew = new AvaNew();
+								avaImpNew.genre = "重要なお知らせ";
+								avaImpNew.content = he2.InnerText;
+								avaImpNew.date = "";
+								avaNews.Add(avaImpNew);
+							}
+						}
+					}
+				}
+				break;
+			}
+
+
 			HtmlElement newsContentHe = webBrowser.Document.GetElementById("news1");
 			if (newsContentHe == null) return false;
 

@@ -80,12 +80,12 @@
 			// columnHeader1
 			// 
 			this.columnHeader1.Text = "ジャンル";
-			this.columnHeader1.Width = 80;
+			this.columnHeader1.Width = 100;
 			// 
 			// columnHeader2
 			// 
 			this.columnHeader2.Text = "内容";
-			this.columnHeader2.Width = 600;
+			this.columnHeader2.Width = 580;
 			// 
 			// columnHeader3
 			// 

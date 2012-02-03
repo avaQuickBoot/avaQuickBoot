@@ -108,9 +108,13 @@ namespace AVAQuickBootMultiAccount
 				foreach (AvaNew avanew in news)
 				{
 					ListViewItem cItem = new ListViewItem(avanew.genre);
+					cItem.UseItemStyleForSubItems = false;
+					cItem.ForeColor = avanew.getForeColor();	//	foreColorは左端だけ
 					cItem.SubItems.Add(avanew.content);
 					cItem.SubItems.Add(avanew.date);
 					cItem.SubItems.Add(avanew.url);
+					for (int i = 0; i < cItem.SubItems.Count; i++)
+						cItem.SubItems[i].BackColor = avanew.getBackColor();	//backColorは全部
 					listView1.Items.Add(cItem);
 				}
 			};
