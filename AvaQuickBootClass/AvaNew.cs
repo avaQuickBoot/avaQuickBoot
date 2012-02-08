@@ -43,7 +43,7 @@ namespace AvaQuickBoot
 					c = System.Drawing.Color.Red;
 					break;
 				default:
-					c = System.Drawing.SystemColors.Window;
+					c = System.Drawing.SystemColors.WindowText;
 					break;
 			}
 			return c;
