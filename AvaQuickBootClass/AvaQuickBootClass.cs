@@ -78,7 +78,7 @@ namespace AvaQuickBoot
 			webBrowser.ScriptErrorsSuppressed = true;
 			webBrowser.AllowNavigation = true;
 			webBrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
-			//webBrowser.Navigate(p.logoutUri);
+			//webBrowser.Navigate(p.logoutUri);	//logoutする
 			webBrowser.Navigate(p.targetUri);
 		}
 

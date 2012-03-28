@@ -20,6 +20,11 @@ namespace AVAQuickBootMultiAccount
 			this.Text = ver.ProductName + " ver: " + ver.ProductVersion;
 			loadAccountFromXml();
 			loadListviewItemsFromAccount();
+
+			if (listView1.Items.Count > 0)
+			{
+				listView1.Items[0].Selected = true;
+			}
 		}
 
 		void loadAccountFromXml()
@@ -224,6 +229,11 @@ namespace AVAQuickBootMultiAccount
 		{
 			if (listView1.SelectedItems.Count < 1) return "";
 			return listView1.SelectedItems[0].SubItems[2].Text;
+		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			launchAva(sender, e);
 		}
 
 	}
