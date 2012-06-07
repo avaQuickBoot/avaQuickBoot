@@ -381,8 +381,8 @@ namespace AvaQuickBoot
 
 	public class AvaQuickBootClassParameter : IDisposable
 	{
-		public readonly Uri targetUri = new Uri("http://ava.gamechu.jp/");
-		public readonly Uri logoutUri = new Uri("https://api.gamechu.jp/login/logoff?service=ava");
+		public readonly Uri targetUri = new Uri("http://ava.pmang.jp/");
+		public readonly Uri logoutUri = new Uri("https://api.pmang.jp/login/logoff?service=ava");
 		public readonly string accountBox = "accountid";
 		public readonly string passwordBox = "password";
 		public readonly string loginButton = "fo_finish";
