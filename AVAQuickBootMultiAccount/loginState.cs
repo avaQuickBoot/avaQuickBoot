@@ -22,23 +22,22 @@ namespace AVAQuickBootMultiAccount
 
 		public loginState(Account _account)
 		{
-			init();
 			account = _account;
+			init();
 		}
 
 		public loginState(string _id, string _pass, bool _startMumble)
 		{
-			init();
 			account = new Account(_id, _pass, "", "", _startMumble);
+			init();
 		}
 
 		void init()
 		{
 			InitializeComponent();
 			closeTimer = new Timer();
-
-			
 		}
+
 
 		~loginState()
 		{
@@ -67,9 +66,11 @@ namespace AVAQuickBootMultiAccount
 			{
 				this.Refresh();	//この時点でformはbusy
 				this.TopMost = false;
-				closeTimer.Interval = 10000;
-				closeTimer.Tick += new EventHandler(closeTimer_Tick);
-				closeTimer.Start();
+				//closeTimer.Interval = 10000;
+				//closeTimer.Tick += new EventHandler(closeTimer_Tick);
+				//closeTimer.Start();
+
+				this.Close();
 			}
 			else
 			{
@@ -148,6 +149,11 @@ namespace AVAQuickBootMultiAccount
 		{
 			if (listView1.SelectedItems.Count < 1) return "";
 			return listView1.SelectedItems[0].SubItems[3].Text;
+		}
+
+		private void loginState_Shown(object sender, EventArgs e)
+		{
+			this.login();
 		}
 
 

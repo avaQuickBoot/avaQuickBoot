@@ -108,6 +108,13 @@ namespace AvaQuickBoot
 		/// </summary>
 		public void doLoginAsync()
 		{
+			if (isAvaLaunched())
+			{
+				this.message = "既にAVAが起動しています。";
+				OnCompleteHandler((object)false, null);
+				return;
+			}
+
 			loginTimer.Tick += new EventHandler(doLoginTimer);
 			loginTimer.Interval = 1000;		//doLoginTimerは基本的にwebBrowser_DocumentCompletedに回してもらう 万が一止まったときのために
 			loginTimer.Start();
@@ -141,6 +148,12 @@ namespace AvaQuickBoot
 							break;
 						case 3:
 							this.message = "起動に必要な鍵が取得できません。アカウント情報が間違っていないか確認してください。";
+							break;
+						case 5:
+							this.message = "何らかの原因でAVAが起動しません。";
+							break;
+						case 6:
+							this.message = "ログアウトできません。";
 							break;
 						default:
 							this.message = "不明な状態に遷移しています。";
@@ -176,11 +189,10 @@ namespace AvaQuickBoot
 
 			bool isSucceed = false;
 			int previousState = state;
-
 			switch (state)
 			{
 				case 0:
-					isSucceed = logoutAva();
+					isSucceed = initAva();
 					break;
 				case 1:
 					if (parseAvaNews()) OnGetNewsHandler(avaNews, null);
@@ -194,6 +206,12 @@ namespace AvaQuickBoot
 					break;
 				case 4:
 					isSucceed = executeAva();
+					break;
+				case 5:
+					isSucceed = isAvaLaunched();
+					break;
+				case 6:
+					isSucceed = logoutAva();
 					break;
 			}
 
@@ -214,7 +232,7 @@ namespace AvaQuickBoot
 			return false;
 		}
 
-		bool logoutAva()
+		bool initAva()
 		{
 			if (webBrowser.IsBusy || webBrowser.ReadyState != WebBrowserReadyState.Complete)
 				return false;
@@ -284,6 +302,28 @@ namespace AvaQuickBoot
 
 			webBrowser.Document.InvokeScript(p.gameStartFlashButtonArgument, gameParam);
 			if (p.startMumble) webBrowser.Document.InvokeScript(p.mumbleStartButton);
+
+			return true;
+		}
+
+		bool isAvaLaunched()
+		{
+			Process[] ps = Process.GetProcessesByName("AVA");
+			if (ps.Length > 0)
+			{
+				webBrowser.Navigate(p.logoutUri);
+				return true;
+			}
+
+			return false;
+		}
+
+		bool logoutAva()
+		{
+			if (webBrowser.IsBusy || webBrowser.ReadyState != WebBrowserReadyState.Complete)
+				return false;
+			if (!webBrowser.Url.Equals(p.targetUri))
+				return false;
 
 			return true;
 		}
@@ -392,7 +432,7 @@ namespace AvaQuickBoot
 		public int loopLimit = 100;	//味付け 開発環境では、25回程度で起動
 		public int stateStayLimit = 30;		//同じステートを何回再試行するか
 		public readonly string gameStartRegex = @"gameStart\(\s*'(?<NUM1>([0-9])+)'\s*,\s*(?<NUM2>([0-9])+)\s*,\s*'(?<NUM3>([0-9])+)'\s*\)";
-		public readonly int finalStateNumber = 5;
+		public readonly int finalStateNumber = 7;
 
 		public string accountid = "";
 		public string password = "";
