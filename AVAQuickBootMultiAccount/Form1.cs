@@ -112,8 +112,11 @@ namespace AVAQuickBootMultiAccount
 				if (account.guid.Equals(guid))
 				{
 					loginState form = new loginState(account.id, account.password, account.startMumble);
+					this.Hide();
 					form.ShowDialog();
-					//form.login();
+					form.Dispose();
+					this.Close();
+					break;
 				}
 			}
 		}

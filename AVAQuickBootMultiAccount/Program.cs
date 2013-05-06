@@ -39,7 +39,6 @@ namespace AVAQuickBootMultiAccount
 						break;
 					case 3:
 						loginState form = new loginState(arg[0], arg[1], bool.Parse(arg[2]));
-						//form.login();
 						Application.Run(form);
 						break;
 				}
