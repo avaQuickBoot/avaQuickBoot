@@ -176,7 +176,7 @@ namespace AVAQuickBootMultiAccount
 		private void 削除ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (listView1.SelectedItems.Count < 1) return;
-			if (MessageBox.Show("Are you sure you want to delete the selected account?", "Confirm",
+			if (MessageBox.Show("本当にアカウント\"" + listView1.SelectedItems[0].Text + "\"を削除してもよろしいですか？", "確認",
 				MessageBoxButtons.YesNo, MessageBoxIcon.Question) != System.Windows.Forms.DialogResult.Yes)
 			{
 				return;
@@ -205,7 +205,7 @@ namespace AVAQuickBootMultiAccount
 			System.Windows.Forms.SaveFileDialog saveDialog = new SaveFileDialog();
 			string arg = " \"" + account.id + "\" \"" + account.password + "\" \"" + account.startMumble.ToString() + "\"";
 
-			saveDialog.FileName = "AVA_" + account.nickName;
+			saveDialog.FileName = "AVA_" + validFileName(account.nickName);
 			saveDialog.Filter = "shortcut file|*.lnk";
 			if (saveDialog.ShowDialog() != DialogResult.OK) return;
 
@@ -219,7 +219,7 @@ namespace AVAQuickBootMultiAccount
 			shortcutType.InvokeMember("Description", BindingFlags.SetProperty, null, shortCut, new object[] { "Shortcut" });
 			shortcutType.InvokeMember("Save", BindingFlags.InvokeMethod, null, shortCut, null);
 
-			MessageBox.Show("Shortcut created.", "info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			MessageBox.Show("ショートカットを作成しました", "info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 		private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -239,5 +239,16 @@ namespace AVAQuickBootMultiAccount
 			launchAva(sender, e);
 		}
 
+		private string validFileName(string s)
+		{
+			string valid = s;
+			char[] invalidch = Path.GetInvalidFileNameChars();
+
+			foreach (char c in invalidch)
+			{
+				valid = valid.Replace(c, '_');
+			}
+			return valid.Clone() as string;
+		}
 	}
 }
