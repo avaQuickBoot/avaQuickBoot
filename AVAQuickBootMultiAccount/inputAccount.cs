@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace AVAQuickBootMultiAccount
 {
 	public partial class inputAccount : Form
 	{
-	   	Account account;
+		private Account account;
 		public EventHandler OnAccountChangedHandler;
 
 		public inputAccount()
 		{
-			account = new Account("", "", "", System.Guid.NewGuid().ToString(), false);
+			account = new Account("", "", "", Guid.NewGuid().ToString(), false);
 			init();
 			button1.Text = "追加";
 		}
@@ -27,23 +22,24 @@ namespace AVAQuickBootMultiAccount
 			button1.Text = "変更";
 		}
 
-		void init()
+		private void init()
 		{
 			InitializeComponent();
 			OnAccountChangedHandler += new EventHandler(empty);
 
 			textBox1.Text = account.nickName;
 			textBox2.Text = account.id;
-			textBox3.Text = account.password;
+			textBox3.Text = "";
 			checkBox1.Checked = account.startMumble;
 		}
 
 		private void button1_Click(object sender, EventArgs e)
 		{
+			
 			if (account.nickName.Length == 0) account.nickName = account.id;
 			account.nickName = textBox1.Text;
 			account.id = textBox2.Text;
-			account.password = textBox3.Text;
+			account.password = Crypto.EncryptString(textBox3.Text, "5a479051fdc4f85e452370f5d7cb1ba1c2fc560c");
 			account.startMumble = checkBox1.Checked;
 
 			OnAccountChangedHandler((object)account, e);
@@ -51,9 +47,11 @@ namespace AVAQuickBootMultiAccount
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-
 		}
-		
-		void empty(object sender, EventArgs e) { /* 何もしません */ }
+
+		private void empty(object sender, EventArgs e)
+		{
+			/* 何もしません */
+		}
 	}
 }

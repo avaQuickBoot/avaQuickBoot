@@ -84,38 +84,38 @@
             this.toolStripSeparator1,
             this.ショートカット作成ToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(221, 98);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(195, 98);
 			// 
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(220, 22);
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(194, 22);
 			this.toolStripMenuItem1.Text = "このアカウントでAVA実行";
 			this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
 			// 
 			// 編集ToolStripMenuItem
 			// 
 			this.編集ToolStripMenuItem.Name = "編集ToolStripMenuItem";
-			this.編集ToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+			this.編集ToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
 			this.編集ToolStripMenuItem.Text = "アカウント情報変更";
 			this.編集ToolStripMenuItem.Click += new System.EventHandler(this.編集ToolStripMenuItem_Click);
 			// 
 			// 削除ToolStripMenuItem
 			// 
 			this.削除ToolStripMenuItem.Name = "削除ToolStripMenuItem";
-			this.削除ToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+			this.削除ToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
 			this.削除ToolStripMenuItem.Text = "アカウント削除";
 			this.削除ToolStripMenuItem.Click += new System.EventHandler(this.削除ToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(181, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(191, 6);
 			// 
 			// ショートカット作成ToolStripMenuItem
 			// 
 			this.ショートカット作成ToolStripMenuItem.Name = "ショートカット作成ToolStripMenuItem";
-			this.ショートカット作成ToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+			this.ショートカット作成ToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
 			this.ショートカット作成ToolStripMenuItem.Text = "ショートカット作成";
 			this.ショートカット作成ToolStripMenuItem.Click += new System.EventHandler(this.ショートカット作成ToolStripMenuItem_Click);
 			// 
@@ -132,6 +132,7 @@
 			// 
 			// button1
 			// 
+			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.button1.Location = new System.Drawing.Point(424, 321);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(125, 41);
@@ -148,6 +149,7 @@
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.listView1);
 			this.Controls.Add(this.button2);
+			this.MinimumSize = new System.Drawing.Size(577, 413);
 			this.Name = "Form1";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Form1";
