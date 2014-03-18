@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using AvaQuickBoot;
+using System.Diagnostics;
 
 namespace AVAQuickBootMultiAccount
 {
@@ -101,8 +102,9 @@ namespace AVAQuickBootMultiAccount
 
 		private void getAvaNews(object sender, EventArgs e)
 		{
-			System.Diagnostics.Debug.WriteLine("Called getAvaNews()");
-
+#if DEBUG
+			Debug.WriteLine("Called getAvaNews()");
+#endif
 			MethodInvoker p = (MethodInvoker)delegate
 			{
 				List<AvaNew> news = sender as List<AvaNew>;
@@ -142,7 +144,7 @@ namespace AVAQuickBootMultiAccount
 		private void listView1_DoubleClick(object sender, EventArgs e)
 		{
 			if (listView1.SelectedItems.Count < 1) return;
-			System.Diagnostics.Process.Start(getUrlFromListViewSelectedItem());
+			Process.Start(getUrlFromListViewSelectedItem());
 		}
 
 		private string getUrlFromListViewSelectedItem()
@@ -155,7 +157,5 @@ namespace AVAQuickBootMultiAccount
 		{
 			this.login();
 		}
-
-
 	}
 }

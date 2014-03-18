@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace AvaQuickBoot
@@ -16,44 +17,44 @@ namespace AvaQuickBoot
 			return MemberwiseClone();
 		}
 
-		public System.Drawing.Color getForeColor()
+		public Color getForeColor()
 		{
-			System.Drawing.Color c;
+			Color c;
 			switch (genre)
 			{
 				case "重要":
-					c = System.Drawing.Color.Firebrick;
+					c = Color.Firebrick;
 					break;
 				case "イベント":
-					c = System.Drawing.Color.MidnightBlue;
+					c = Color.MidnightBlue;
 					break;
 				case "オン大会":
-					c = System.Drawing.Color.DarkCyan;
+					c = Color.DarkCyan;
 					break;
 				case "オフ大会":
-					c = System.Drawing.Color.DarkGreen;
+					c = Color.DarkGreen;
 					break;
 				case "お知らせ":
-					c = System.Drawing.Color.DimGray;
+					c = Color.DimGray;
 					break;
 				case "キャンペーン":
-					c = System.Drawing.Color.DarkViolet;
+					c = Color.DarkViolet;
 					break;
 				case "重要なお知らせ":
-					c = System.Drawing.Color.Red;
+					c = Color.Red;
 					break;
 				default:
-					c = System.Drawing.SystemColors.WindowText;
+					c = SystemColors.WindowText;
 					break;
 			}
 			return c;
 		}
 
-		public System.Drawing.Color getBackColor()
+		public Color getBackColor()
 		{
 			if (genre == "重要なお知らせ")
 				return System.Drawing.Color.Pink;
-			return System.Drawing.SystemColors.Window;
+			return SystemColors.Window;
 		}
 	}
 }

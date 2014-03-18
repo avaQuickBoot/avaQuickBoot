@@ -31,8 +31,8 @@ namespace AVAQuickBootMultiAccount
 		{
 			try
 			{
-				string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-				if (!System.IO.File.Exists(exePath + @"\account.xml")) return;
+				string exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+				if (!File.Exists(exePath + @"\account.xml")) return;
 
 				TextReader tr = new StreamReader(exePath + @"\account.xml");
 				XmlSerializer xs = new XmlSerializer(typeof(List<Account>));
@@ -111,7 +111,7 @@ namespace AVAQuickBootMultiAccount
 			{
 				if (account.guid.Equals(guid))
 				{
-					loginState form = new loginState(account.id, account.password, account.startMumble);
+					loginState form = new loginState(account.id, Crypto.DecryptString(account.password, "5a479051fdc4f85e452370f5d7cb1ba1c2fc560c"), account.startMumble);
 					this.Hide();
 					form.ShowDialog();
 					form.Dispose();
@@ -142,7 +142,7 @@ namespace AVAQuickBootMultiAccount
 		{
 			try
 			{
-				string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+				string exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 				TextWriter tw = new StreamWriter(exePath + @"\account.xml");
 				XmlSerializer xs = new XmlSerializer(typeof(List<Account>));
 				xs.Serialize(tw, accountList);
@@ -177,7 +177,7 @@ namespace AVAQuickBootMultiAccount
 		{
 			if (listView1.SelectedItems.Count < 1) return;
 			if (MessageBox.Show("本当にアカウント\"" + listView1.SelectedItems[0].Text + "\"を削除してもよろしいですか？", "確認",
-				MessageBoxButtons.YesNo, MessageBoxIcon.Question) != System.Windows.Forms.DialogResult.Yes)
+				MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
 			{
 				return;
 			}
@@ -202,7 +202,7 @@ namespace AVAQuickBootMultiAccount
 			if (account == null) return;
 
 
-			System.Windows.Forms.SaveFileDialog saveDialog = new SaveFileDialog();
+			SaveFileDialog saveDialog = new SaveFileDialog();
 			string arg = " \"" + account.id + "\" \"" + account.password + "\" \"" + account.startMumble.ToString() + "\"";
 
 			saveDialog.FileName = "AVA_" + validFileName(account.nickName);

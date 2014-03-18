@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Threading;
  
 namespace AVAQuickBootMultiAccount
 {
@@ -20,7 +21,7 @@ namespace AVAQuickBootMultiAccount
 
 			try
 			{
-				mutex = new System.Threading.Mutex(false, @"{747690E4-BCE9-4949-9B79-FBAC7E700D63}");
+				mutex = new Mutex(false, @"{747690E4-BCE9-4949-9B79-FBAC7E700D63}");
 				if (!mutex.WaitOne(0, false))
 				{
 					Process prevProcess = GetPreviousProcess();
